@@ -35,6 +35,53 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Set default theme to light mode
+st.markdown("""
+<style>
+    /* Force light theme */
+    .stApp {
+        color-scheme: light;
+    }
+    
+    /* Override dark theme elements */
+    .stApp > header {
+        background-color: transparent;
+    }
+    .stApp > div[data-testid="stToolbar"] {
+        background-color: transparent;
+    }
+    .stApp > div[data-testid="stDecoration"] {
+        background-color: transparent;
+    }
+    .stApp > div[data-testid="stStatusWidget"] {
+        background-color: transparent;
+    }
+    .stApp > div[data-testid="stSidebar"] {
+        background-color: #f0f2f6;
+    }
+    
+    /* Ensure light theme for main content */
+    .main .block-container {
+        background-color: white;
+        color: black;
+    }
+    
+    /* Light theme for sidebar */
+    .css-1d391kg {
+        background-color: #f0f2f6;
+    }
+    
+    /* Override any dark theme text colors */
+    .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6 {
+        color: black;
+    }
+    
+    .stApp p, .stApp div, .stApp span {
+        color: black;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # Apply custom CSS
 st.markdown(MAIN_CSS, unsafe_allow_html=True)
 
@@ -52,8 +99,8 @@ class InvestmentRecommendationApp:
         """
         Initialize the application with required services and session state.
         
-        Sets up AI service (singleton), image service, PDF service, and
-        initializes the session state with default values.
+        Sets up AI service (singleton), image service, and initializes the session state.
+        PDF service is lazy-loaded to avoid startup errors.
         """
         self.logger = get_logger()
         
@@ -61,8 +108,8 @@ class InvestmentRecommendationApp:
             # Use singleton pattern for OpenRouter AI service to avoid re-initialization
             self.ai_service = OpenRouterAIService.get_instance()
             self.image_service = ImageService()
-            self.pdf_service = PDFService()
-            # ValidationService removed - no price validation needed
+            # PDF service will be lazy-loaded when needed
+            self._pdf_service = None
             
             # Initialize session state
             self._initialize_session_state()
@@ -71,8 +118,21 @@ class InvestmentRecommendationApp:
             
         except Exception as e:
             self.logger.error(f"Failed to initialize application: {e}", exc_info=True)
-            st.error(ERROR_MESSAGES['pdf_generation_failed'])
+            st.error("Application initialization failed. Please refresh the page and try again.")
             raise
+    
+    @property
+    def pdf_service(self):
+        """Lazy-load PDF service to avoid startup errors"""
+        if self._pdf_service is None:
+            try:
+                self._pdf_service = PDFService()
+                self.logger.info("PDF service initialized successfully")
+            except Exception as e:
+                self.logger.error(f"Failed to initialize PDF service: {e}", exc_info=True)
+                st.error("PDF service initialization failed. Please check LaTeX installation.")
+                raise
+        return self._pdf_service
     
     def _initialize_session_state(self) -> None:
         """

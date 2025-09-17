@@ -15,7 +15,7 @@ A professional Streamlit application for generating investment recommendation re
 
 ## 🚀 Quick Start
 
-### Option 1: Docker (Recommended)
+### Option 1: Docker Compose (Recommended)
 ```bash
 # Clone the repository
 git clone https://github.com/mpcmarkets/recommendations_generator.git
@@ -25,41 +25,46 @@ cd recommendations_generator
 cp .env.example .env
 # Edit .env and add your API keys
 
-# Start with Docker (automatically installs ai_tools from private repo)
-./start.sh docker
+# Start with Docker Compose
+docker-compose up -d
 
 # Access the application
 open http://localhost:8501
+
+# Stop the application
+docker-compose down
 ```
 
 ### Option 2: Local Development
 ```bash
 # Set up local environment
-./start.sh local
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
 
-# Activate virtual environment and run
-source .venv/bin/activate
+# Start the application
 streamlit run app.py
-```
 
-### Option 3: Quick Run
-```bash
-# Run without virtual environment setup
-./start.sh run
+# Access the application
+open http://localhost:8501
 ```
 
 ## 📋 Available Commands
 
+### Docker Compose Commands
 ```bash
-./start.sh local       # Set up local development environment
-./start.sh run         # Quick start without virtual environment
-./start.sh docker      # Deploy with Docker (recommended)
-./start.sh stop        # Stop Docker container
-./start.sh restart     # Restart Docker container
-./start.sh logs        # View Docker logs
-./start.sh status      # Check Docker container status
-./start.sh cleanup     # Clean up Docker resources
-./start.sh help        # Show help message
+docker-compose up -d          # Start the application in background
+docker-compose down           # Stop the application
+docker-compose logs           # View application logs
+docker-compose ps             # Check container status
+docker-compose restart        # Restart the application
+docker-compose build          # Rebuild the Docker image
+```
+
+### Local Development Commands
+```bash
+streamlit run app.py          # Start the application locally
+pip install -r requirements.txt  # Install dependencies
 ```
 
 ## 🎯 How to Use

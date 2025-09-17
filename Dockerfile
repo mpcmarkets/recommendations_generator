@@ -4,8 +4,10 @@ FROM python:3.11-slim
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies for LaTeX and other tools
+# Install system dependencies for LaTeX, git, and other tools
 RUN apt-get update && apt-get install -y \
+    git \
+    curl \
     texlive-latex-base \
     texlive-latex-extra \
     texlive-fonts-recommended \
@@ -15,7 +17,11 @@ RUN apt-get update && apt-get install -y \
     ghostscript \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install dependencies (including ai_tools from private repo)
+# Copy ai_tools wheel file and install it
+COPY libs/ai_tools-1.0.0-py3-none-any.whl /tmp/
+RUN pip install --no-cache-dir /tmp/ai_tools-1.0.0-py3-none-any.whl
+
+# Copy requirements and install other dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 

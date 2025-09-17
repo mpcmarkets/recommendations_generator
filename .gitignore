@@ -62,9 +62,6 @@ images/
 # Docker
 .dockerignore
 
-# AI Tools wheel file (will be built separately)
-ai_tools-*.whl
-
 # Test files
 test_*.py
 *_test.py

@@ -8,6 +8,16 @@ services:
     envVars:
       - key: OPENROUTER_API_KEY
         sync: false
+      - key: STREAMLIT_THEME_BASE
+        value: light
+      - key: STREAMLIT_THEME_PRIMARY_COLOR
+        value: "#1f77b4"
+      - key: STREAMLIT_THEME_BACKGROUND_COLOR
+        value: "#ffffff"
+      - key: STREAMLIT_THEME_SECONDARY_BACKGROUND_COLOR
+        value: "#f0f2f6"
+      - key: STREAMLIT_THEME_TEXT_COLOR
+        value: "#262730"
       - key: STREAMLIT_SERVER_ADDRESS
         value: 0.0.0.0
       - key: STREAMLIT_SERVER_HEADLESS

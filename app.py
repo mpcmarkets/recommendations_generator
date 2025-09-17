@@ -11,6 +11,13 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, Any
 
+# Load environment variables early
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # AI tools library is now installed as a package
 
 # Import our modules
@@ -41,43 +48,6 @@ st.markdown("""
     /* Force light theme */
     .stApp {
         color-scheme: light;
-    }
-    
-    /* Override dark theme elements */
-    .stApp > header {
-        background-color: transparent;
-    }
-    .stApp > div[data-testid="stToolbar"] {
-        background-color: transparent;
-    }
-    .stApp > div[data-testid="stDecoration"] {
-        background-color: transparent;
-    }
-    .stApp > div[data-testid="stStatusWidget"] {
-        background-color: transparent;
-    }
-    .stApp > div[data-testid="stSidebar"] {
-        background-color: #f0f2f6;
-    }
-    
-    /* Ensure light theme for main content */
-    .main .block-container {
-        background-color: white;
-        color: black;
-    }
-    
-    /* Light theme for sidebar */
-    .css-1d391kg {
-        background-color: #f0f2f6;
-    }
-    
-    /* Override any dark theme text colors */
-    .stApp h1, .stApp h2, .stApp h3, .stApp h4, .stApp h5, .stApp h6 {
-        color: black;
-    }
-    
-    .stApp p, .stApp div, .stApp span {
-        color: black;
     }
 </style>
 """, unsafe_allow_html=True)

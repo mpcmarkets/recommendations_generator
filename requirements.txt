@@ -3,4 +3,5 @@ streamlit-quill>=0.0.3
 Pillow>=9.0.0
 python-dateutil>=2.8.0
 pydantic>=2.0.0
-# ai_tools will be installed from local wheel file
+# ai_tools from private repository
+git+https://github.com/mpcmarkets/ai_tools.git

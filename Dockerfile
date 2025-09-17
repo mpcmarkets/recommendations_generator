@@ -15,13 +15,7 @@ RUN apt-get update && apt-get install -y \
     ghostscript \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy ai_tools wheel file
-COPY ai_tools-1.0.0-py3-none-any.whl .
-
-# Install ai_tools first
-RUN pip install --no-cache-dir ai_tools-1.0.0-py3-none-any.whl
-
-# Copy requirements and install other dependencies
+# Copy requirements and install dependencies (including ai_tools from private repo)
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 

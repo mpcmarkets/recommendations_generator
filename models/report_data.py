@@ -24,6 +24,7 @@ class ReportData:
     entry_price: str
     target_price: str
     stop_loss: str
+    exit_price: str
     
     # Analysis
     analysis_types: List[str]
@@ -64,6 +65,7 @@ class ReportData:
             entry_price=f"{form_data.entry_price:.2f}",
             target_price=f"{form_data.target_price:.2f}",
             stop_loss=f"{form_data.stop_loss:.2f}",
+            exit_price=f"{form_data.exit_price:.2f}",
             analysis_types=[at if isinstance(at, str) else at.value for at in form_data.analysis_types],
             investment_thesis=form_data.get_executive_summary_for_pdf(),
             rationale=form_data.get_investment_rationale_for_pdf(),
@@ -86,6 +88,7 @@ class ReportData:
             'entry_price': self.entry_price,
             'target_price': self.target_price,
             'stop_loss': self.stop_loss,
+            'exit_price': self.exit_price,
             'analysis_types': self.analysis_types,
             'investment_thesis': self.investment_thesis,
             'rationale': self.rationale,

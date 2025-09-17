@@ -168,10 +168,23 @@ class PDFService:
         action_box = f"\\actionbox{{{action}}}"
         template_content = template_content.replace('ACTIONBOXPLACEHOLDER', action_box)
         
-        # Other fields - handle HTML content (skip duplicates that will be handled below)
-        template_content = template_content.replace('ENTRYPRICEPLACEHOLDER', escape_latex(report_data.entry_price))
-        template_content = template_content.replace('TARGETPRICEPLACEHOLDER', escape_latex(report_data.target_price))
-        template_content = template_content.replace('STOPLOSSPLACEHOLDER', escape_latex(report_data.stop_loss))
+        # Price fields - handle dynamically based on action type
+        if report_data.action.lower() in ['buy', 'add']:
+            # For Buy/Add actions, show entry, target, stop loss
+            template_content = template_content.replace('ENTRYPRICELABELPLACEHOLDER', 'Entry Price:')
+            template_content = template_content.replace('TARGETPRICELABELPLACEHOLDER', 'Target Price:')
+            template_content = template_content.replace('STOPLOSSLABELPLACEHOLDER', 'Stop Loss:')
+            template_content = template_content.replace('ENTRYPRICEPLACEHOLDER', escape_latex(report_data.entry_price))
+            template_content = template_content.replace('TARGETPRICEPLACEHOLDER', escape_latex(report_data.target_price))
+            template_content = template_content.replace('STOPLOSSPLACEHOLDER', escape_latex(report_data.stop_loss))
+        else:
+            # For Sell/Take Profit actions, show only exit price
+            template_content = template_content.replace('ENTRYPRICELABELPLACEHOLDER', 'Exit Price:')
+            template_content = template_content.replace('TARGETPRICELABELPLACEHOLDER', '')
+            template_content = template_content.replace('STOPLOSSLABELPLACEHOLDER', '')
+            template_content = template_content.replace('ENTRYPRICEPLACEHOLDER', escape_latex(report_data.exit_price))
+            template_content = template_content.replace('TARGETPRICEPLACEHOLDER', '')
+            template_content = template_content.replace('STOPLOSSPLACEHOLDER', '')
         template_content = template_content.replace('RISKLEVELPLACEHOLDER', escape_latex(report_data.risk_level))
         
         # Content sections

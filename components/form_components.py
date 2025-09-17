@@ -227,51 +227,94 @@ class TradePlanForm:
     
     @staticmethod
     def render() -> Dict[str, float]:
-        """Render trade plan form"""
-        st.markdown("""
-        <div class="section-header">
-            <h3>💰 Trade Plan</h3>
-            <p>Define your entry, target, and stop loss prices</p>
-        </div>
-        """, unsafe_allow_html=True)
+        """Render trade plan form with different fields based on action type"""
+        # Get current action from session state
+        current_action = st.session_state.get('form_action', 'Buy')
         
         # Get default values from session state if available
         form_data = getattr(st.session_state, 'form_data', None)
-        entry_default = form_data.entry_price if form_data and form_data.entry_price > 0 else 0.01
-        target_default = form_data.target_price if form_data and form_data.target_price > 0 else 0.01
-        stop_default = form_data.stop_loss if form_data and form_data.stop_loss > 0 else 0.01
         
-        col1, col2, col3 = st.columns(3)
+        # Determine if this is a Buy/Add action or Sell/Take Profit action
+        is_buy_or_add = current_action.lower() in ['buy', 'add']
         
-        with col1:
-            entry_price = st.number_input(
-                "Entry Price:",
-                value=entry_default,
-                step=0.01,
-                key="form_entry_price"
-            )
-        
-        with col2:
-            target_price = st.number_input(
-                "Target Price:",
-                value=target_default,
-                step=0.01,
-                key="form_target_price"
-            )
-        
-        with col3:
-            stop_loss = st.number_input(
-                "Stop Loss:",
-                value=stop_default,
-                step=0.01,
-                key="form_stop_loss"
-            )
-        
-        return {
-            'entry_price': entry_price,
-            'target_price': target_price,
-            'stop_loss': stop_loss
-        }
+        if is_buy_or_add:
+            # Show entry, target, stop loss for Buy/Add actions
+            st.markdown("""
+            <div class="section-header">
+                <h3>💰 Trade Plan</h3>
+                <p>Define your entry, target, and stop loss prices</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            entry_default = form_data.entry_price if form_data and form_data.entry_price > 0 else 0.01
+            target_default = form_data.target_price if form_data and form_data.target_price > 0 else 0.01
+            stop_default = form_data.stop_loss if form_data and form_data.stop_loss > 0 else 0.01
+            
+            col1, col2, col3 = st.columns(3)
+            
+            with col1:
+                entry_price = st.number_input(
+                    "Entry Price:",
+                    value=entry_default,
+                    step=0.01,
+                    key="form_entry_price"
+                )
+            
+            with col2:
+                target_price = st.number_input(
+                    "Target Price:",
+                    value=target_default,
+                    step=0.01,
+                    key="form_target_price"
+                )
+            
+            with col3:
+                stop_loss = st.number_input(
+                    "Stop Loss:",
+                    value=stop_default,
+                    step=0.01,
+                    key="form_stop_loss"
+                )
+            
+            return {
+                'entry_price': entry_price,
+                'target_price': target_price,
+                'stop_loss': stop_loss,
+                'exit_price': 0.0  # Not used for Buy/Add
+            }
+        else:
+            # Show only exit price for Sell/Take Profit actions
+            st.markdown("""
+            <div class="section-header">
+                <h3>💰 Trade Plan</h3>
+                <p>Define your exit price</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            exit_default = form_data.exit_price if form_data and form_data.exit_price > 0 else 0.01
+            
+            col1, col2, col3 = st.columns(3)
+            
+            with col1:
+                exit_price = st.number_input(
+                    "Exit Price:",
+                    value=exit_default,
+                    step=0.01,
+                    key="form_exit_price"
+                )
+            
+            # Empty columns for layout consistency
+            with col2:
+                st.empty()
+            with col3:
+                st.empty()
+            
+            return {
+                'entry_price': 0.0,  # Not used for Sell/Take Profit
+                'target_price': 0.0,  # Not used for Sell/Take Profit
+                'stop_loss': 0.0,  # Not used for Sell/Take Profit
+                'exit_price': exit_price
+            }
 
 
 class ImageUploadForm:

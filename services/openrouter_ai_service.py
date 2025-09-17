@@ -140,7 +140,8 @@ class OpenRouterAIService:
                 stop_loss=form_data.stop_loss,
                 analysis_types=form_data.analysis_types,
                 investment_rationale=form_data.ai_rationale,
-                context=form_data.ai_context
+                context=form_data.ai_context,
+                exit_price=form_data.exit_price
             )
             
             response = llm_instance.invoke(prompt)
@@ -166,7 +167,8 @@ class OpenRouterAIService:
                 stop_loss=form_data.stop_loss,
                 analysis_types=form_data.analysis_types,
                 investment_rationale=form_data.ai_rationale,
-                context=form_data.ai_context
+                context=form_data.ai_context,
+                exit_price=form_data.exit_price
             )
             
             response = llm_instance.invoke(prompt)

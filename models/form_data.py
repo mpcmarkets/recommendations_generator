@@ -53,10 +53,13 @@ class FormData:
     # Analysis
     analysis_types: List[AnalysisType] = field(default_factory=list)
     
-    # Trade Plan
+    # Trade Plan - Different fields based on action type
+    # For Buy/Add: entry_price, target_price, stop_loss
+    # For Sell/Take Profit: exit_price only
     entry_price: float = DEFAULT_ENTRY_PRICE
     target_price: float = DEFAULT_TARGET_PRICE
     stop_loss: float = DEFAULT_STOP_LOSS
+    exit_price: float = DEFAULT_ENTRY_PRICE  # For Sell/Take Profit actions
     
     # Content
     content_source: ContentSource = ContentSource.HUMAN
@@ -94,6 +97,7 @@ class FormData:
             'entry_price': self.entry_price,
             'target_price': self.target_price,
             'stop_loss': self.stop_loss,
+            'exit_price': self.exit_price,
             'content_source': self.content_source.value if hasattr(self.content_source, 'value') else str(self.content_source),
             'human_executive_summary': self.human_executive_summary,
             'human_investment_rationale': self.human_investment_rationale,
@@ -122,6 +126,7 @@ class FormData:
             entry_price=data.get('entry_price', 0.0),
             target_price=data.get('target_price', 0.0),
             stop_loss=data.get('stop_loss', 0.0),
+            exit_price=data.get('exit_price', 0.0),
             content_source=ContentSource(data.get('content_source', 'human')),
             human_executive_summary=data.get('human_executive_summary', ''),
             human_investment_rationale=data.get('human_investment_rationale', ''),
@@ -260,3 +265,51 @@ class FormData:
         if self.content_source == ContentSource.AI:
             return self.ai_investment_rationale_markdown if self.ai_investment_rationale_markdown else self.ai_investment_rationale
         return self.human_investment_rationale
+    
+    def is_buy_or_add_action(self) -> bool:
+        """
+        Check if the action is Buy or Add (requires entry, target, stop loss).
+        
+        Returns:
+            bool: True if action is Buy or Add, False otherwise.
+        """
+        return self.action.lower() in ['buy', 'add']
+    
+    def is_sell_or_take_profit_action(self) -> bool:
+        """
+        Check if the action is Sell or Take Profit (requires only exit price).
+        
+        Returns:
+            bool: True if action is Sell or Take Profit, False otherwise.
+        """
+        return self.action.lower() in ['sell', 'take profit']
+    
+    def get_primary_price(self) -> float:
+        """
+        Get the primary price field based on action type.
+        
+        Returns:
+            float: Entry price for Buy/Add actions, exit price for Sell/Take Profit actions.
+        """
+        if self.is_buy_or_add_action():
+            return self.entry_price
+        else:
+            return self.exit_price
+    
+    def get_price_fields_for_display(self) -> Dict[str, float]:
+        """
+        Get the appropriate price fields for display based on action type.
+        
+        Returns:
+            Dict[str, float]: Dictionary with appropriate price fields for the action.
+        """
+        if self.is_buy_or_add_action():
+            return {
+                'entry_price': self.entry_price,
+                'target_price': self.target_price,
+                'stop_loss': self.stop_loss
+            }
+        else:
+            return {
+                'exit_price': self.exit_price
+            }

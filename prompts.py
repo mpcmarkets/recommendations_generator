@@ -13,9 +13,7 @@ You are a senior investment analyst at MPC Markets writing an investment thesis 
 **COMPANY & INVESTMENT CASE**:
 - Company: {ticker}
 - Recommendation: {action}
-- Entry Price: {entry_price}
-- Target Price: {target_price}
-- Stop Loss: {stop_loss}
+{price_fields}
 - Analysis Framework: {analysis_types}
 
 **INVESTMENT RATIONALE**:
@@ -59,9 +57,7 @@ You are a senior investment analyst at MPC Markets conducting comprehensive anal
 **COMPANY & INVESTMENT CASE**:
 - Company: {ticker}
 - Recommendation: {action}
-- Entry Price: {entry_price}
-- Target Price: {target_price}
-- Stop Loss: {stop_loss}
+{price_fields}
 - Analysis Framework: {analysis_types}
 
 **CORE INVESTMENT RATIONALE**:
@@ -111,27 +107,38 @@ Paragraph 5: Risk Considerations - Key risks, mitigation factors, risk-reward pr
 **OUTPUT**: Write only the investment rationale text with exactly 4-5 paragraphs separated by blank lines, no additional formatting or explanations.
 """
 
-def format_investment_thesis_prompt(ticker, action, entry_price, target_price, stop_loss, analysis_types, investment_rationale, context):
+def _format_price_fields(action, entry_price, target_price, stop_loss, exit_price):
+    """Format price fields based on action type."""
+    action_lower = action.lower()
+    
+    if action_lower in ['buy', 'add']:
+        return f"""- Entry Price: {entry_price}
+- Target Price: {target_price}
+- Stop Loss: {stop_loss}"""
+    else:  # sell, take profit
+        return f"- Exit Price: {exit_price}"
+
+def format_investment_thesis_prompt(ticker, action, entry_price, target_price, stop_loss, analysis_types, investment_rationale, context, exit_price=0.0):
     """Format the investment summary prompt with provided data."""
+    price_fields = _format_price_fields(action, entry_price, target_price, stop_loss, exit_price)
+    
     return INVESTMENT_THESIS_PROMPT.format(
         ticker=ticker,
         action=action,
-        entry_price=entry_price,
-        target_price=target_price,
-        stop_loss=stop_loss,
+        price_fields=price_fields,
         analysis_types=', '.join(analysis_types) if analysis_types else 'None specified',
         investment_rationale=investment_rationale or 'No specific rationale provided',
         context=context or 'No additional context provided'
     )
 
-def format_analysis_prompt(ticker, action, entry_price, target_price, stop_loss, analysis_types, investment_rationale, context):
+def format_analysis_prompt(ticker, action, entry_price, target_price, stop_loss, analysis_types, investment_rationale, context, exit_price=0.0):
     """Format the investment rationale prompt with provided data."""
+    price_fields = _format_price_fields(action, entry_price, target_price, stop_loss, exit_price)
+    
     return ANALYSIS_PROMPT.format(
         ticker=ticker,
         action=action,
-        entry_price=entry_price,
-        target_price=target_price,
-        stop_loss=stop_loss,
+        price_fields=price_fields,
         analysis_types=', '.join(analysis_types) if analysis_types else 'None specified',
         investment_rationale=investment_rationale or 'No specific rationale provided',
         context=context or 'No additional context provided'

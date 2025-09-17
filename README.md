@@ -21,7 +21,7 @@ A professional Streamlit application for generating investment recommendation re
 git clone https://github.com/mpcmarkets/recommendations_generator.git
 cd recommendations_generator
 
-# Start with Docker
+# Start with Docker (automatically builds ai_tools if needed)
 ./start.sh docker
 
 # Access the application
@@ -83,8 +83,9 @@ streamlit run app.py
 - **Frontend**: Streamlit with custom CSS styling
 - **Backend**: Python with modular design
 - **PDF Generation**: LaTeX compilation with pdflatex
-- **AI Integration**: OpenRouter API with 57+ free models
+- **AI Integration**: OpenRouter API with 57+ free models via ai_tools library
 - **Image Processing**: PIL/Pillow with automatic format conversion
+- **Self-Contained**: Includes ai_tools source code and build scripts
 
 ### AI Models Available
 - **DeepSeek Chat v3.1** (32K context) - Default
@@ -111,11 +112,17 @@ streamlit run app.py
 recommendation_generator/
 ├── start.sh                    # Main entry point script
 ├── scripts/
-│   └── deploy.sh              # Unified deployment script
+│   ├── deploy.sh              # Unified deployment script
+│   └── build_ai_tools.sh      # Build ai_tools wheel from source
 ├── app.py                     # Main Streamlit application
 ├── config.py                  # Configuration settings
 ├── requirements.txt           # Python dependencies
 ├── Dockerfile                 # Docker configuration
+├── ai_tools-1.0.0-py3-none-any.whl  # Pre-built ai_tools wheel
+├── ai_tools_source/           # ai_tools source code
+├── ai_tools_setup.py          # ai_tools build configuration
+├── ai_tools_pyproject.toml    # ai_tools project configuration
+└── ai_tools_requirements.txt  # ai_tools dependencies
 ├── components/                # UI components
 │   ├── form_components.py     # Form input components
 │   ├── model_selector.py      # AI model selection

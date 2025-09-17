@@ -1,0 +1,58 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+*.md
+
+# Development files
+.env
+.env.example
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Logs
+*.log
+logs/
+data/logs/
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+data/temp/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.pytest_cache/
+
+# Docker
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile.dev
+
+# Scripts
+scripts/
+*.sh
+
+# Research directories
+research/

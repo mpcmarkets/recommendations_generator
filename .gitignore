@@ -70,9 +70,9 @@ test_*.py
 *_test.py
 tests/
 
-# Documentation
-*.md
-!README.md
+# Documentation (keep main README)
+# *.md
+# !README.md
 
 # LaTeX auxiliary files
 *.aux

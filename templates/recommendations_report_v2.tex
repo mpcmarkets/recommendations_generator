@@ -1,0 +1,211 @@
+\documentclass[11pt,a4paper]{article}
+
+% Basic packages
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{amssymb}
+\usepackage{needspace}     % For better page breaks
+\usepackage{afterpage}     % For page break control
+\usepackage{setspace}      % For line spacing control
+\usepackage{mathptmx}      % Times-like font
+\usepackage{hyperref}      % For hyperlinks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+\usepackage{helvet}        % Helvetica-like font
+\usepackage{ifthen}        % For conditional logic
+
+% Page layout
+\geometry{
+    top=1in,
+    bottom=1in,
+    left=0.75in,
+    right=0.75in,
+    headheight=50pt
+}
+
+% Define corporate colors - Professional and consistent palette
+\definecolor{primaryblue}{RGB}{25, 50, 100}      % Main brand color
+\definecolor{darkblue}{RGB}{10, 20, 50}          % Darker headers for more contrast
+\definecolor{accentblue}{RGB}{60, 120, 200}      % Accent elements
+\definecolor{lightblue}{RGB}{240, 245, 255}      % Light backgrounds
+\definecolor{lightgray}{RGB}{248, 249, 250}      % Very light backgrounds
+\definecolor{textgray}{RGB}{80, 85, 95}          % Lighter body text for better contrast
+\definecolor{successgreen}{RGB}{40, 120, 60}     % Success/positive elements
+\definecolor{warningred}{RGB}{180, 50, 50}       % Warning/sell elements
+
+% Set document font and spacing
+\renewcommand{\rmdefault}{ptm}  % Times-like font for main text
+\renewcommand{\sfdefault}{phv}  % Helvetica-like font for sans-serif
+\onehalfspacing                % 1.5 line spacing for readability
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\raisebox{-2.0\height}{\textcolor{primaryblue}{\textbf{\large Recommendations - CATEGORYPLACEHOLDER}}}}
+\fancyhead[R]{\raisebox{-0.7\height}{\includegraphics[height=35pt, width=140pt, keepaspectratio]{mpc_logo.png}}}
+\fancyfoot[L]{\footnotesize\textcolor{textgray}{%
+\begin{minipage}{\textwidth}%
+\raggedright
+\textbf{Disclaimer:} The recommendation given is general advice only. It does not take into account your personal objectives, financial situation, or specific needs. This information should not be your sole resource when making such decisions. We strongly recommend you to seek the advice of financial, taxation, and legal professionals before finalising any investment decisions.%
+\end{minipage}%
+}}
+\renewcommand{\headrulewidth}{0.8pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{primaryblue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{primaryblue}\leaders\hrule height \footrulewidth\hfill}}
+
+% Custom commands for styling
+\newcommand{\sectionheading}[1]{%
+  \needspace{5\baselineskip}%  % Ensure at least 5 lines of space or break to next page
+  \vspace{1.5em}%
+  {\Large\bfseries\textcolor{darkblue}{#1}}%
+  \vspace{0.5em}%
+  \hrule height 2pt \color{primaryblue}%
+  \vspace{0.8em}%
+  \nopagebreak[4]%  % Strongly discourage page break right after section heading
+}
+
+% Enhanced action feature box with shading (optimized for 33% column)
+\newcommand{\actionbox}[1]{%
+  \vspace{0.3em}%
+  \setlength{\fboxsep}{2pt}%
+  \setlength{\fboxrule}{1pt}%
+  % Conditional coloring based on action
+  \ifthenelse{\equal{#1}{Buy} \OR \equal{#1}{Add}}{%
+    \fcolorbox{successgreen}{successgreen!20}{%
+      \parbox{0.8\textwidth}{%
+        \vspace{10pt}%
+        \begin{center}%
+        {\Large\bfseries\textcolor{successgreen}{#1}}%
+        \end{center}%
+        \vspace{10pt}%
+      }%
+    }%
+  }{%
+    \ifthenelse{\equal{#1}{Sell} \OR \equal{#1}{Take Profit}}{%
+      \fcolorbox{warningred}{warningred!20}{%
+        \parbox{0.8\textwidth}{%
+          \vspace{10pt}%
+          \begin{center}%
+          {\Large\bfseries\textcolor{warningred}{#1}}%
+          \end{center}%
+          \vspace{10pt}%
+        }%
+      }%
+    }{%
+      \fcolorbox{primaryblue}{lightblue}{%
+        \parbox{0.8\textwidth}{%
+          \vspace{10pt}%
+          \begin{center}%
+          {\Large\bfseries\textcolor{darkblue}{#1}}%
+          \end{center}%
+          \vspace{10pt}%
+        }%
+      }%
+    }%
+  }%
+  \vspace{0.3em}%
+}
+
+% Recommendation box styling
+\newcommand{\recommendationbox}[2]{%
+  \needspace{8\baselineskip}%  % Ensure enough space for the box or break to next page
+  \vspace{1em}%
+  \begin{center}%
+    \fcolorbox{primaryblue}{lightblue}{%
+      \begin{minipage}{0.6\textwidth}%
+        \vspace{12pt}%
+        \centering
+        {\large\bfseries\textcolor{darkblue}{#1}}\\[0.5em]%
+        #2%
+        \vspace{12pt}%
+      \end{minipage}%
+    }%
+  \end{center}%
+  \vspace{0.8em}%
+}
+
+% Customize itemize environment
+\setlist[itemize]{leftmargin=*,topsep=0pt,itemsep=0.4em,parsep=0.2em}
+
+\begin{document}
+
+% Remove default page number on first page
+\thispagestyle{fancy}
+
+% Date section (above the 2-column layout) - right aligned
+\vspace{1cm}
+\begin{flushright}
+  {\large\textcolor{textgray}{Date: DATEPLACEHOLDER}}\\[0.8cm]
+\end{flushright}
+
+% Two-column layout: Action box (33%) and Title/Subtitle (66%) - vertically centered
+\begin{center}
+\begin{minipage}[c]{0.33\textwidth}
+  \centering
+  ACTIONBOXPLACEHOLDER
+\end{minipage}%
+\hfill
+\begin{minipage}[c]{0.66\textwidth}
+  \raggedright
+  {\Large\bfseries\textcolor{darkblue}{MAINTITLEPLACEHOLDER}}\\[0.3cm]
+  {\Huge\bfseries\textcolor{darkblue}{SUBTITLEPLACEHOLDER}}\\[0.3cm]
+\end{minipage}
+\end{center}
+
+% Spacing after the 2-column section
+\vspace{0.8cm}
+
+% Company logo section (if uploaded)
+COMPANYLOGOPLACEHOLDER
+
+% Analysis Framework
+\sectionheading{Analysis Framework}
+
+ANALYSISTYPESPLACEHOLDER
+
+\pagebreak[2]  % Allow page break here if needed
+
+% Trade Plan Box
+\recommendationbox{Trade Plan}{
+\begin{tabular}{@{}ll@{}}
+  \textbf{Ticker:} & \textbf{TICKERPLACEHOLDER} \\
+  \textbf{Entry Price:} & \$ENTRYPRICEPLACEHOLDER \\
+  \textbf{Target Price:} & \$TARGETPRICEPLACEHOLDER \\
+  \textbf{Stop Loss:} & \$STOPLOSSPLACEHOLDER \\
+\end{tabular}
+}
+
+\newpage  % Force page break before Investment Thesis
+
+% Investment Thesis
+\sectionheading{Investment Thesis}
+\vspace{0.3em}
+INVESTMENTTHESISPLACEHOLDER
+
+\vspace{0.8em}  % Add space after investment thesis
+
+\pagebreak[2]  % Allow page break here if needed
+
+% Analysis
+\sectionheading{Analysis}
+\vspace{0.3em}
+RATIONALEPLACEHOLDER
+
+\vspace{0.8em}  % Add space after analysis
+
+% Featured image section (if uploaded)
+FEATUREDIMAGEPLACEHOLDER
+
+\pagebreak[2]  % Allow page break here if needed
+
+\end{document}

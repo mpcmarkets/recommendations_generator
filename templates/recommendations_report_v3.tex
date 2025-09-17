@@ -1,0 +1,149 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{setspace}
+\usepackage{pifont}
+\usepackage{changepage}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+% Use standard fonts (compatible with pdfLaTeX)
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Colors
+\definecolor{mpcblue}{RGB}{30, 58, 138}
+\definecolor{lightblue}{RGB}{240, 248, 255}
+\definecolor{green}{RGB}{34, 197, 94}
+\definecolor{gray}{RGB}{156, 163, 175}
+
+% Footer setup with disclaimer only
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0.5pt}
+\fancyfoot[L]{\tiny\color{gray} Disclaimer: The recommendation given is general advice only. It does not take into account your personal objectives, financial situation, or specific needs. This information should not be your sole resource when making such decisions. We strongly recommend you to seek the advice of financial, taxation, and legal professionals before finalising any investment decisions.}
+\fancyfoot[R]{}
+\fancyfoot[C]{}
+
+\begin{document}
+
+% Two column header with logos
+\begin{minipage}[t]{0.5\textwidth}
+    \vspace{0pt}
+    \raggedright
+    \includegraphics[height=60pt, keepaspectratio]{mpc_logo.png}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}
+    \vspace{0pt}
+    \raggedright
+    \includegraphics[height=60pt, keepaspectratio]{COMPANYLOGOPLACEHOLDER}
+\end{minipage}
+
+\vspace{2em}
+
+% Category
+\begin{center}
+    {\Huge\bfseries\color{mpcblue} CATEGORYPLACEHOLDER}
+\end{center}
+
+\vspace{1.5em}
+
+% Action recommendation
+\begin{center}
+    {\Huge\bfseries\color{mpcblue} ACTIONPLACEHOLDER Recommendation: COMPANYNAMEPLACEHOLDER}
+    
+    \vspace{1.2em}
+    
+    {\Large\itshape\color{gray} ***General Advice***}
+    
+    \vspace{1em}
+    
+    {\large\bfseries\color{mpcblue} DATEPLACEHOLDER}
+\end{center}
+
+% Horizontal line
+\vspace{1.5em}
+\noindent\rule{\textwidth}{0.5pt}
+\vspace{1.5em}
+
+% Analysis checklist
+\begin{adjustwidth}{0.33\textwidth}{0pt}
+ANALYSISTYPESPLACEHOLDER
+\end{adjustwidth}
+
+% Horizontal line
+\vspace{1em}
+\noindent\rule{\textwidth}{0.5pt}
+\vspace{1em}
+
+% Subtitle (if provided)
+\begin{center}
+    {\Large\bfseries\color{mpcblue} SUBTITLEPLACEHOLDER}
+\end{center}
+
+\vspace{1em}
+
+% Content sections with proper paragraph spacing
+\setlength{\parskip}{0.3em}
+\setlength{\parindent}{0pt}
+
+% Summary section
+\noindent{\Large\bfseries\color{mpcblue} Summary}\\[0.3em]
+\noindent\rule{\textwidth}{0.5pt}\\[0.5em]
+{\normalsize
+INVESTMENTTHESISPLACEHOLDER
+}
+
+\vspace{1em}
+
+% Trade Plan box
+\begin{center}
+    \begin{tcolorbox}[
+        colback=lightblue,
+        colframe=mpcblue,
+        boxrule=2pt,
+        arc=3pt,
+        width=0.8\textwidth,
+        left=1em,
+        right=1em,
+        top=1em,
+        bottom=1em
+    ]
+        \centering
+        {\Large\bfseries\color{mpcblue} Trade Plan}
+        
+        \vspace{1em}
+        
+        \begin{tabular}{ll}
+            \textbf{Ticker:} & \textbf{TICKERPLACEHOLDER} \\
+            \textbf{Entry Price:} & \textbf{ENTRYPRICEPLACEHOLDER} \\
+            \textbf{Target Price:} & \textbf{TARGETPRICEPLACEHOLDER} \\
+            \textbf{Stop Loss:} & \textbf{STOPLOSSPLACEHOLDER}
+        \end{tabular}
+    \end{tcolorbox}
+\end{center}
+
+\vspace{1em}
+
+% Investment Rationale section
+\noindent{\Large\bfseries\color{mpcblue} Investment Rationale}\\[0.3em]
+\noindent\rule{\textwidth}{0.5pt}\\[0.5em]
+{\normalsize
+RATIONALEPLACEHOLDER
+}
+
+% Chart image section (if available)
+CHARTIMAGEPLACEHOLDER
+
+\end{document}

@@ -59,15 +59,8 @@ class OpenRouterAIService:
             if not self._openrouter_provider:
                 raise Exception("OpenRouter provider not available")
             
-            # Debug: Check API key availability
-            api_key_available = bool(self._openrouter_provider.api_key)
-            print(f"DEBUG: OpenRouter API key available: {api_key_available}")
-            
             # Test OpenRouter availability
-            availability_result = self._openrouter_provider.test_availability()
-            print(f"DEBUG: OpenRouter availability test result: {availability_result}")
-            
-            if not availability_result:
+            if not self._openrouter_provider.test_availability():
                 raise Exception("OpenRouter API is not available")
             
             self._ai_available = True

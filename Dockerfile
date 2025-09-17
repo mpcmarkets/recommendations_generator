@@ -39,13 +39,14 @@ RUN chmod +x /app/start.sh
 ENV PYTHONPATH=/app
 ENV STREAMLIT_SERVER_HEADLESS=true
 ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+ENV STREAMLIT_SERVER_PORT=8501
 
-# Expose port (Render will set the actual port via environment variable)
-EXPOSE 10000
+# Expose port (default 8501 for docker-compose, Render will override with PORT)
+EXPOSE 8501
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:${PORT:-10000}/_stcore/health || exit 1
+    CMD curl -f http://localhost:${STREAMLIT_SERVER_PORT:-8501}/_stcore/health || exit 1
 
 # Run the application using startup script
 CMD ["/app/start.sh"]

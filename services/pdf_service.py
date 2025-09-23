@@ -169,7 +169,7 @@ class PDFService:
         template_content = template_content.replace('ACTIONBOXPLACEHOLDER', action_box)
         
         # Price fields - handle dynamically based on action type
-        if report_data.action.lower() in ['buy', 'add']:
+        if report_data.action.lower() in ['buy', 'add', 'switch']:
             # For Buy/Add actions, show entry, target, stop loss
             template_content = template_content.replace('ENTRYPRICELABELPLACEHOLDER', 'Entry Price:')
             template_content = template_content.replace('TARGETPRICELABELPLACEHOLDER', 'Target Price:')

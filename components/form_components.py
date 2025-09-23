@@ -125,7 +125,7 @@ class BasicInfoForm:
             )
         
         with col2:
-            action_options = ['Buy', 'Add', 'Take Profit', 'Sell']
+            action_options = ['Buy', 'Add', 'Switch', 'Take Profit', 'Sell']
             action_default = 0
             if form_data and form_data.action:
                 try:
@@ -234,8 +234,8 @@ class TradePlanForm:
         # Get default values from session state if available
         form_data = getattr(st.session_state, 'form_data', None)
         
-        # Determine if this is a Buy/Add action or Sell/Take Profit action
-        is_buy_or_add = current_action.lower() in ['buy', 'add']
+        # Determine if this is a Buy/Add/Switch action or Sell/Take Profit action
+        is_buy_or_add = current_action.lower() in ['buy', 'add', 'switch']
         
         if is_buy_or_add:
             # Show entry, target, stop loss for Buy/Add actions

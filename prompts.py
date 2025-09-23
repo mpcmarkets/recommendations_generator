@@ -111,7 +111,7 @@ def _format_price_fields(action, entry_price, target_price, stop_loss, exit_pric
     """Format price fields based on action type."""
     action_lower = action.lower()
     
-    if action_lower in ['buy', 'add']:
+    if action_lower in ['buy', 'add', 'switch']:
         return f"""- Entry Price: {entry_price}
 - Target Price: {target_price}
 - Stop Loss: {stop_loss}"""

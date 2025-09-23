@@ -268,12 +268,12 @@ class FormData:
     
     def is_buy_or_add_action(self) -> bool:
         """
-        Check if the action is Buy or Add (requires entry, target, stop loss).
+        Check if the action is Buy, Add, or Switch (requires entry, target, stop loss).
         
         Returns:
-            bool: True if action is Buy or Add, False otherwise.
+            bool: True if action is Buy, Add, or Switch, False otherwise.
         """
-        return self.action.lower() in ['buy', 'add']
+        return self.action.lower() in ['buy', 'add', 'switch']
     
     def is_sell_or_take_profit_action(self) -> bool:
         """
